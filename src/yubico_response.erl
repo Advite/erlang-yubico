@@ -52,7 +52,7 @@
 -spec check_verify_response(OTP :: nonempty_string(),
 			    APIkey :: yubico:apikey(),
 			    Nonce :: nonempty_string(),
-			    Body :: dict(),
+			    Body :: dict:dict(),
 			    Server :: nonempty_string(),
 			    LogFun :: yubico_log:logfun()
 			   ) -> {'auth','ok'} | {'bad_auth', bad_auth_code()}.
@@ -81,7 +81,7 @@ check_verify_response(OTP, APIkey, Nonce, Body, Server, LogFun) ->
 -spec verify_authentic_response(OTP :: nonempty_string(),
 				APIkey :: yubico:apikey(),
 				Nonce :: nonempty_string(),
-				Body :: dict(),
+				Body :: dict:dict(),
 				LogFun :: yubico_log:logfun()
 			       ) -> 'true' | 'bad_otp_or_nonce' | 'failed_hmac_verification'.
 verify_authentic_response(OTP, APIkey, Nonce, Body, LogFun) ->
@@ -110,7 +110,7 @@ verify_authentic_response(OTP, APIkey, Nonce, Body, LogFun) ->
 
 -spec dict_has(Key :: nonempty_string(),
 	       Val :: nonempty_string(),
-	       Dict :: dict()) -> boolean().
+	       Dict :: dict:dict()) -> boolean().
 dict_has(Key, Val, Dict) ->
     case dict:find(Key, Dict) of
 	{ok, Val} ->
@@ -119,7 +119,7 @@ dict_has(Key, Val, Dict) ->
 	    false
     end.
 
--spec get_verification_status(Body :: dict()
+-spec get_verification_status(Body :: dict:dict()
 			     ) -> 'ok' | yubico_server_error_response() | 'unknown_result'.
 get_verification_status(Body) ->
     %% Don't do list_to_atom to not depleat finite atom table

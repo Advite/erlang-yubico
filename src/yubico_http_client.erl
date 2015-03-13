@@ -105,7 +105,7 @@ worker_init(Master, Server, URL, Timeout, OTP, APIkey, Nonce, Options, LogFun) -
 	     Timeout :: non_neg_integer(),
 	     Options :: yubico:yubico_client_options(),
 	     LogFun :: yubico_log:logfun()
-	    ) -> {'error', Reason :: any()} | {'ok', dict()}.
+	    ) -> {'error', Reason :: any()} | {'ok', dict:dict()}.
 verify(URL, Timeout, _Options, LogFun) when is_list(URL), is_integer(Timeout) ->
     yubico_log:log(LogFun, debug, "yubico_http_client:verify (URL ~p, timeout ~p)", [URL, Timeout]),
 
@@ -143,7 +143,7 @@ make_request(URL, Timeout, LogFun) ->
 	    {error, Reason}
     end.
 
--spec parse_response(string()) -> {'ok', dict()}.
+-spec parse_response(string()) -> {'ok', dict:dict()}.
 parse_response(In) when is_list(In) ->
     Lines = string:tokens(In, "\r\n"),
     Tuples = to_tuples(Lines),
