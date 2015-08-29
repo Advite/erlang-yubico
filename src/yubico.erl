@@ -120,11 +120,17 @@
 %%            {error, Reason :: any()} on errors
 %% @end
 %%--------------------------------------------------------------------
--spec simple_verify(OTP :: nonempty_string(),
-		    Id :: nonempty_string(),
-		    APIkey :: apikey() | string(),
+-spec simple_verify(OTP :: nonempty_string() | binary(),
+		    Id :: nonempty_string() | binary(),
+		    APIkey :: apikey() | string() | binary(),
 		    Options :: yubico_client_options()
 		   ) -> {'auth', 'ok'} | {'bad_auth', yubico_response:bad_auth_code()} | {'error', Reason :: any()}.
+simple_verify(OTP, Id, APIkey, Options) when is_binary(OTP) ->
+    simple_verify(binary_to_list(OTP), Id, APIkey, Options);
+simple_verify(OTP, Id, APIkey, Options) when is_binary(Id) ->
+    simple_verify(OTP, binary_to_list(Id), APIkey, Options);
+simple_verify(OTP, Id, APIkey, Options) when is_binary(APIkey) ->
+    simple_verify(OTP, Id, binary_to_list(APIkey), Options);
 simple_verify(OTP, Id, APIkey, Options) when is_list(APIkey) ->
     %% string APIkey, assume base64 encoded
     NewAPIkey =
@@ -163,7 +169,10 @@ simple_verify(OTP, Id, APIkey, Options) when is_list(OTP), is_list(Id), is_binar
 %%            none
 %% @end
 %%--------------------------------------------------------------------
--spec yubikey_id(OTP :: nonempty_string()) -> string() | none.
+-spec yubikey_id(OTP :: nonempty_string() | binary()) -> string() | none.
+yubikey_id(OTP) when is_binary(OTP) ->
+    yubikey_id(binary_to_list(OTP));
+
 yubikey_id(OTP) when is_list(OTP) ->
     %% The OTP part of the OTP is the last 32 bytes. The yubikey ID is
     %% whatever appears before the OTP part (_can_ be programmed to be
