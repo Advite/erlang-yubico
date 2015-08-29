@@ -131,8 +131,12 @@ simple_verify(OTP, Id, APIkey, Options) when is_binary(Id) ->
     simple_verify(OTP, binary_to_list(Id), APIkey, Options);
 simple_verify(OTP, Id, APIkey, Options) when is_binary(APIkey) ->
     simple_verify(OTP, Id, binary_to_list(APIkey), Options);
-simple_verify(OTP, Id, APIkey, Options) when is_list(APIkey) ->
-    %% string APIkey, assume base64 encoded
+simple_verify(OTP, Id, APIkey, Options) when is_list(OTP), is_list(Id), is_list(APIkey), is_list(Options) ->
+    LogFun = get_logfun(Options),
+    Servers = get_verify_servers(Options),
+    Timeout = get_timeout(Options),
+    WSURL = get_verify_wsurl(Options),
+
     NewAPIkey =
 	try base64:decode(APIkey) of
 	    Res -> Res
@@ -140,16 +144,9 @@ simple_verify(OTP, Id, APIkey, Options) when is_list(APIkey) ->
 	    _:_ ->
 		erlang:error(bad_api_key)
 	end,
-    simple_verify(OTP, Id, NewAPIkey, Options);
-simple_verify(OTP, Id, APIkey, Options) when is_list(OTP), is_list(Id), is_binary(APIkey), is_list(Options) ->
-    LogFun = get_logfun(Options),
-    Servers = get_verify_servers(Options),
-    Timeout = get_timeout(Options),
-    WSURL = get_verify_wsurl(Options),
-
     yubico_verify:http(OTP,
 		       Id,
-		       APIkey,
+		       NewAPIkey,
 		       Servers,
 		       WSURL,
 		       Timeout,
