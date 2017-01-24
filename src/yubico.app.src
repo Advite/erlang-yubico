@@ -1,16 +1,11 @@
-{application, yubico,
- [
-  {description, "Client implementing the Yubico Validation Protocol Version 2.0."},
-  {vsn, "0.1.4"},
-  {registered, []},
-  {applications, [
-                  kernel,
-                  stdlib,
-                  inets
-                 ]},
-  {included_applications, [edoc]},
-  {env, []},
-  {maintainers,["Heinz N. Gies"]},
-  {licenses,["BSD"]},
-  {links,[{"Github","https://github.com/project-fifo/erlang-yubico"}]}
- ]}.
+{application,yubico,
+             [{description,"Client implementing the Yubico Validation Protocol Version 2.0."},
+              {vsn,"0.1.5"},
+              {registered,[]},
+              {applications,[kernel,stdlib,inets]},
+              {included_applications,[edoc]},
+              {env,[]},
+              {maintainers,["Heinz N. Gies"]},
+              {licenses,["BSD"]},
+              {links,[{"Github",
+                       "https://github.com/project-fifo/erlang-yubico"}]}]}.
