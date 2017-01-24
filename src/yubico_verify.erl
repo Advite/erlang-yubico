@@ -64,7 +64,7 @@
 %%--------------------------------------------------------------------
 %% Types
 %%--------------------------------------------------------------------
--type yubico_client_scheme() :: 'http'.
+-type yubico_client_scheme() :: 'http' | 'https'.
 
 %%--------------------------------------------------------------------
 %% Macros
@@ -148,6 +148,8 @@ http(OTP, Id, APIkey, Servers, WSURL, Timeout, Options, LogFun)
 	    {error, timeout}
     end.
 
+%%  as right now the https isn't used so we dould get errors
+-dialyzer({nowarn_function, master_init/11}).
 -spec master_init(Parent :: pid(),
 		  Nonce :: nonempty_string(),
 		  OTP :: nonempty_string(),
@@ -322,7 +324,7 @@ get_nonce(Options) ->
 		    _ ->
 			erlang:error(crypto_not_available)
 		end,
-		Random = crypto:rand_bytes(?DEFAULT_NONCE_BYTES),
+		Random = crypto:strong_rand_bytes(?DEFAULT_NONCE_BYTES),
 		Hex = yubico_util:to_hex(binary_to_list(Random)),
 		lists:flatten(Hex);
 	    L ->

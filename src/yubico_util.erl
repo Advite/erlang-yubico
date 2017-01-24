@@ -36,7 +36,7 @@
 %%            Hex : string()
 %% @end
 %%--------------------------------------------------------------------
--spec to_hex(string()) -> string().
+-spec to_hex(string()) -> [[byte()]].
 to_hex(In) ->
     [byte_to_hex(H) || H <- In].
 
