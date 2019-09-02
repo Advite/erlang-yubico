@@ -128,7 +128,7 @@ http(OTP, Id, APIkey, Servers, WSURL, Timeout, Options, LogFun)
 			      OTP,
 			      Id,
 			      APIkey,
-			      http,
+			      https,
 			      Servers,
 			      WSURL,
 			      Timeout,
