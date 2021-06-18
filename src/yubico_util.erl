@@ -113,11 +113,5 @@ hex(N) when N < 10 ->
 hex(N) when N >= 10, N < 16 ->
     $a + (N - 10).
 
-
--ifndef(old_hash).
 sha_mac(Key, Data) ->
-    crypto:hmac(sha, Key, Data).
--else.
-sha_mac(Key, Data) ->
-    crypto:sha_mac(Key, Data).
--endif.
+    crypto:mac(hmac, sha, Key, Data).
