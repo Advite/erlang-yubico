@@ -3,7 +3,6 @@
               {vsn,"0.1.5"},
               {registered,[]},
               {applications,[kernel,stdlib,inets]},
-              {included_applications,[edoc]},
               {env,[]},
               {maintainers,["Heinz N. Gies"]},
               {licenses,["BSD"]},
