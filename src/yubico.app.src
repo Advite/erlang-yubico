@@ -2,7 +2,7 @@
              [{description,"Client implementing the Yubico Validation Protocol Version 2.0."},
               {vsn,"0.1.5"},
               {registered,[]},
-              {applications,[kernel,stdlib,inets]},
+              {applications,[kernel,stdlib,inets,edoc]},
               {env,[]},
               {maintainers,["Heinz N. Gies"]},
               {licenses,["BSD"]},
